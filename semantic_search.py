@@ -1,5 +1,5 @@
 import pandas as pd
-import textwrap
+
 
 def data_load(path):
     df = pd.read_csv(path)
@@ -12,10 +12,16 @@ def clean_text(text):
     text = text.strip()
     return text
 
-def chunk_text(text, max_length=100):
+def chunk_text(text, chunk_size =35, overlap=8):
+    if chunk_size <= 0:
+        raise ValueError("Chunk size must be positive")
 
-    chunks = textwrap.wrap(text, width=max_length)
-    return chunks
+    if overlap < 0 or overlap >= chunk_size:
+        raise ValueError("overlap must be >= 0 and smaller than chunk size")
+    words = text.split()
+    step = chunk_size - overlap
+
+    return [" ".join(words[start: start + chunk_size]) for start in range(0, len(words), step)] 
 
 def get_embeddings(texts):
     pass
