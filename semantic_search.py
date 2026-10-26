@@ -8,12 +8,13 @@ def data_load(path):
 def clean_text(text):
     import re
     text = text.lower()
-    text = re.sub(r'[^w\s]', '', txt)
+    text = re.sub(r'[^\w\s]', '', text)
     text = text.strip()
     return text
 
-def chuck_text(text, max_length=100):
-    chunks = textwrap.wrap(text, width = max_length)
+def chunk_text(text, max_length=100):
+
+    chunks = textwrap.wrap(text, width=max_length)
     return chunks
 
 def get_embeddings(texts):
@@ -23,8 +24,7 @@ def search_similar(query, n_results=3):
     pass
 
 if __name__ == "__main__":
-    df = data_load("/data/faq.csv")
+    df = data_load("data/faq.csv")
     df["clean_question"] = df["question"].apply(clean_text)
     df["clean_answer"] = df["answer"].apply(clean_text)
-    print(df_head)
-
+    print(df.head())
