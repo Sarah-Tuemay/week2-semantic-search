@@ -60,4 +60,4 @@ week2-deliverable/
 
 ## Repository
 
-GitHub: [Your GitHub Link Here]
+GitHub: [Semantic Search](https://github.com/Sarah-Tuemay/week2-semantic-search)
