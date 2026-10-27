@@ -1,7 +1,7 @@
 import pandas as pd
-from sentence_transeformers import SentenceTransformer
-
-
+from sentence_transformers import SentenceTransformer
+import chromadb
+from chromadb.utils import embedding_functions
 def data_load(path):
     df = pd.read_csv(path)
     return df
@@ -34,7 +34,19 @@ def get_embeddings(texts):
 
 
 def search_similar(query, n_results=3):
-    pass
+    embedding_func = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all_MiniLM-L6-v2")
+    client = chromadb.chromadb.PersistentClient(path="./chroma_db")
+    collection = client.get_or_create_collection(
+        name="faq_collection",
+        embedding_function=embedding_func
+    )
+
+    results = collection.query(
+        query_texts=[query],
+        n_results=n_results
+    )
+
+    return results
 
 
 if __name__ == "__main__":
